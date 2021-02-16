@@ -56,7 +56,7 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
 
                 context = new DataAccess(connection);
 
-                batches = context.GetAllBatchesFromDb();
+                batches = context.GetNewBatchesFromDb();
                 masterModel.BatchModels = batches;
 
 
@@ -106,7 +106,7 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
 
                 context = new DataAccess(connection);
              
-                batches = context.GetAllBatchesFromDb();
+                batches = context.GetNewBatchesFromDb();
 
                 masterModel.BatchModels = batches;
             };

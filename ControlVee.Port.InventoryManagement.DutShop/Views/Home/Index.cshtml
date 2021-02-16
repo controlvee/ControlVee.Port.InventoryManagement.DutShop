@@ -2,7 +2,118 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@model ControlVee.Port.InventoryManagement.DutShop.Models.MasterModel
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <!--Can we move these?-->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+
+
+
+   
+
+
+
+                <div class="container">
+                 
+                    <ul id="wkslist" class="overflow-auto pre-scrollable list-group-horizontal"></ul>
+
+
+
+
+
+                </div>
+
+                <select id="nameOfDoughnutBatch" class="form-select" aria-label="Default select example">
+                    <option value="Classic Glazed">Classic Glazed</option>
+                    <option value="Strawberry PopTart">Strawberry PopTart</option>
+                    <option value="Chocolatte">Chocolatte</option>
+                    <option value="Capn Crunched">Capn Crunched</option>
+                    <option value="Emma noms">Emma noms</option>
+                    <option value="Shred Tha Gnar">Shred Tha Gnar</option>
+                    <option value="Sugar High">Sugar High</option>
+                </select>
+                <select id="quantityOfBatch" class="form-select" aria-label="Default select example">
+                    <option value="6">6</option>
+                    <option value="12">12</option>
+                    <option value="24">24</option>
+                    <option value="48">48</option>
+                </select>
+
+
+
+           <script type="text/javascript">
+        
+
+
+                function getAllBatches() {
+                    // Get all batches.
+                    $.ajax({
+                        url: '/Home/GetAllBatches',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            response = JSON.parse(data);
+                            $.each(response, function (key, value) {
+                                var li =
+                                    $('<div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div class="form-text">'
+                                        + value['ID'] + '</div><div >' + value['NameOf'] + '</div><div><span class="badge bg-primary rounded-pill float-right">' + value['Total']
+                                        + '</span></div><div >' + value['Started'] + '</div></div>');
+                                li.find('label').text(value['NameOf']);
+                                $('#wkslist').removeData(key);
+                                $('#wkslist').append(li);
+
+                            });
+                        },
+                        error: function (e) {
+                            console.log(e);
+                            }
+
+                        });
+                }
+                function createBatch() {
+
+                var nameOf = document.getElementById("nameOfDoughnutBatch").value;
+                var total = document.getElementById("quantityOfBatch").value;
+                $.ajax({
+                    type: 'POST',
+                    url: '/Home/CreateBatchRecord',
+                    dataType: 'json',
+                    data: "data=" + JSON.stringify({ id: 0, nameOf: nameOf, total: total }),
+                    success: function () {
+                        console.log("created batch");
+                        getAllBatches();
+                    },
+                    error: function () { console.log("FAIL ON CREATE BATCH"); }
+
+                });
+
+
+
+                };
+
+                </script>
+                    <button id="createBatch" class="btn float-right" onclick="createBatch()">create batch</button>
+    
+</body>
+</html>
+

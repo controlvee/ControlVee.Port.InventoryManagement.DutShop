@@ -60,7 +60,7 @@ namespace ControlVee.Port.InventoryManagement.DutShop
             return updated;
         }
 
-        public List<BatchModel> GetAllBatchesFromDb()
+        public List<BatchModel> GetNewBatchesFromDb()
         {
             batches = new List<BatchModel>();
 
