@@ -48,27 +48,14 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
 
         public IActionResult Index()
         {
-
-
-            using (var connection = new System.Data.SqlClient.SqlConnection())
-            {
-                connection.ConnectionString = cstring;
-
-                context = new DataAccess(connection);
-
-                batches = context.GetNewBatchesFromDb();
-                masterModel.BatchModels = batches;
-
-
-            };
-
-            return View(masterModel);
+            return View();
         }
 
       
         [HttpPost]
         public IActionResult CreateBatchRecord(string data)
         {
+            List<BatchModel> batches = new List<BatchModel>();
             // TODO: Handle unterminated string exc.
             // TODO: Click twice to update batches?
             var createBatchModel = JsonConvert.DeserializeObject<CreateBatchModel>(data);
@@ -78,25 +65,19 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
                 connection.ConnectionString = cstring;
 
                 context = new DataAccess(connection);
-                
 
-                if (!context.CreateBatchRecordFromDb(createBatchModel.nameOf, createBatchModel.total))
+                foreach(var model in context.CreateBatchRecordFromDb(createBatchModel.nameOf, createBatchModel.total))
                 {
-                    // Return to ajax call.
-                    throw new System.Exception("Move from batch to inventory failed.");
+                    batches.Add(model);
                 }
-
-              
-
             };
 
-            return Json(JsonConvert.SerializeObject("{ message: \"200\" }"));
+            // Send back Ids.
+            return Json(JsonConvert.SerializeObject(batches));
         }
 
        
-
         [HttpGet]
-        // TODO: Return partial view?
         public IActionResult GetAllBatches()
         {
             batches = new List<BatchModel>();
@@ -106,12 +87,36 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
 
                 context = new DataAccess(connection);
              
-                batches = context.GetNewBatchesFromDb();
+                batches = context.GetNewlyAllBatchesFromDb();
 
                 masterModel.BatchModels = batches;
             };
 
             return Json(JsonConvert.SerializeObject(batches));
-        }      
+        }
+
+        [HttpPost]
+        public IActionResult MoveToInventory(string data)
+        {
+            List<BatchModel> batches = new List<BatchModel>();
+            // TODO: Handle unterminated string exc.
+            // TODO: Click twice to update batches?
+            var createBatchModel = JsonConvert.DeserializeObject<CreateBatchModel>(data);
+
+            using (var connection = new System.Data.SqlClient.SqlConnection())
+            {
+                connection.ConnectionString = cstring;
+
+                context = new DataAccess(connection);
+
+                foreach (var model in context.CreateBatchRecordFromDb(createBatchModel.nameOf, createBatchModel.total))
+                {
+                    batches.Add(model);
+                }
+            };
+
+            // Send back Ids.
+            return Json(JsonConvert.SerializeObject(batches));
+        }
     }
 }

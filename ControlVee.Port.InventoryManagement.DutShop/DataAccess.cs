@@ -10,7 +10,7 @@ namespace ControlVee.Port.InventoryManagement.DutShop
     {
         private System.Data.IDbConnection connection;
         private readonly string storedProc_CreateBatchRecord = "CreateBatchRecord";
-        private readonly string storedProc_GetAllBatches = "GetAllBatches";
+        private readonly string storedProc_GetallBatches = "GetAllBatches";
         private List<BatchModel> batches;
         private BatchModel batch;
 
@@ -25,9 +25,9 @@ namespace ControlVee.Port.InventoryManagement.DutShop
         }
 
         #region DbActions
-        internal bool CreateBatchRecordFromDb(string nameOf, int? total)
+        internal List<BatchModel> CreateBatchRecordFromDb(string nameOf, int? total)
         {
-            bool updated = false;
+            batches = new List<BatchModel>();
 
             AssuredConnected();
             using (System.Data.IDbCommand command = connection.CreateCommand())
@@ -52,22 +52,24 @@ namespace ControlVee.Port.InventoryManagement.DutShop
 
                 using (System.Data.IDataReader reader = command.ExecuteReader())
                 {
-                    if (reader.RecordsAffected > 0)
-                        updated = true;
+                    while (reader.Read())
+                    {
+                        batches.Add(MapBatchesFromDb(reader));
+                    }
                 }
             }
 
-            return updated;
+            return batches;
         }
 
-        public List<BatchModel> GetNewBatchesFromDb()
+        public List<BatchModel> GetNewlyAllBatchesFromDb()
         {
             batches = new List<BatchModel>();
 
             AssuredConnected();
             using (System.Data.IDbCommand command = connection.CreateCommand())
             {
-                string text = storedProc_GetAllBatches;
+                string text = storedProc_GetallBatches;
                 command.CommandText = text;
                 command.CommandType = System.Data.CommandType.StoredProcedure;
 
