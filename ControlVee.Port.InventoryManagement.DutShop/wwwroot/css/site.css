@@ -4,11 +4,21 @@
 body {
 }
 
-.list-group-item {
-    margin: 10px;
-}
 
 
 .list-group {
     height: 500px;
+}
+
+
+
+#batcheslst {
+    margin: 50px;
+    background-color: #536c72;
+    padding: 20px;
+}
+
+#lstItem {
+    padding: 10px;
+   
 }

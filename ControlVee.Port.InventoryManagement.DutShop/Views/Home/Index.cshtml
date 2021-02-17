@@ -27,15 +27,22 @@
 </head>
 <body>
 
+    <div class"container" style="padding: 10px;">
+        <div id="lstItem" class="container border unstyled list-unstyled" style="width:175px; color: white;">
+            <div class="form-text" style="color: #758a8f;">
+                1213256
+            </div><div id="flexSwitchCompleted" class="form-check form-switch d-inline-block" style="padding:0px;">
+            <input class="form-check-input" type="checkbox" style=""></input></div> 
+            <div class="badge bg-primary rounded-pill float-left" style="margin:14px;">' + value['Total'] + '</div>
+            <div class="">' + value['Started'] + '</div>
+        </div>
+    </div>
 
 
 
+    <div class="custom-control">
 
-
-
-    <div class="container">
-
-        <ul id="wkslist" class="overflow-auto pre-scrollable list-group-horizontal"></ul>
+        <ul id="batcheslst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
 
 
 
@@ -81,12 +88,11 @@
                 console.log(response);
                 $.each(response, function (key, value) {
                     var li =
-                        $('<div class="container-fluid" style="margin:10p"><div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div class="form-text">'
+                        $('<div class="container"><div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"/><div class="form-text">'
                             + value['ID'] + '</div><div >' + value['NameOf'] + '</div><div><span class="badge bg-primary rounded-pill float-right">' + value['Total']
                             + '</span></div><div >' + value['Started'] + '</div></div></div>');
-                    li.find('label').text(value['NameOf']);
-                    $('#wkslist').removeData(key);
-                    $('#wkslist').append(li);
+                    $('#batcheslst').removeData(key);
+                    $('#batcheslst').append(li);
 
                 });
             },
@@ -105,11 +111,11 @@
                 console.log(response);
                 $.each(response, function (key, value) {
                     var li =
-                        $('<div class="container-fluid" style="margin:10px;"><div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div class="form-text">'
+                        $('<div class="container border" style="margin:20px;  width:250px; padding:40px;"> <div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div class="form-text">'
                             + value['ID'] + '</div><div >' + value['NameOf'] + '</div><div><span class="badge bg-primary rounded-pill float-right">' + value['Total']
-                            + '</span></div><div >' + value['Started'] + '</div></div></div>');
-                    $('#wkslist').removeData(key);
-                    $('#wkslist').append(li);
+                            + '</span></div><div >' + value['Started'] + '</div></div><div>');
+                    $('#batcheslst').removeData(key);
+                    $('#batcheslst').append(li);
 
                 });
             },
@@ -127,8 +133,12 @@
             Insert to inventory.
 
         *@
-
-
+        $.each(
+            document.getElementsByClassName("form-check-input"), function (key, value) {
+                console.log(key, value['checked']);
+            }
+        );
+       
         $.ajax({
             type: 'POST',
             url: '/Home/MoveToInventory',
@@ -142,9 +152,8 @@
                         $('<div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div class="form-text">'
                             + value['ID'] + '</div><div >' + value['NameOf'] + '</div><div><span class="badge bg-primary rounded-pill float-right">' + value['Total']
                             + '</span></div><div >' + value['Started'] + '</div></div>');
-                    li.find('label').text(value['NameOf']);
-                    $('#wkslist').removeData(key);
-                    $('#wkslist').append(li);
+                    $('#batchesLst').removeData(key);
+                    $('#batchesLst').append(li);
 
                 });
             },
