@@ -13,6 +13,7 @@ namespace ControlVee.Port.InventoryManagement.DutShop
         private readonly string storedProc_GetallBatches = "GetAllBatches";
         private readonly string storedProc_MoveToInventory = "MoveToInventory";
         private readonly string storedProc_GetAllOnHandInventory = "GetAllOnHandInventory";
+        private readonly string storedProc_GetInventoryTotalsByType = "GetOnHandInventoryTotalsByType";
         private List<BatchModel> batches;
         private BatchModel batch;
 
@@ -136,6 +137,28 @@ namespace ControlVee.Port.InventoryManagement.DutShop
             }
         }
 
+        public List<InventoryOnHandModelByType> GetInventoryTotalsByTypeFromDb()
+        {
+            List<InventoryOnHandModelByType> inv = new List<InventoryOnHandModelByType>();
+
+            // TODO.
+            AssuredConnected();
+            using (System.Data.IDbCommand command = connection.CreateCommand())
+            {
+                command.CommandText = storedProc_GetInventoryTotalsByType;
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                using (System.Data.IDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        inv.Add(MapTotalOnHandInvetoryAllByTypeToDb(reader));
+                    }
+                }
+            }
+
+            return inv;
+        }
         #endregion
 
         #region Db Mappings
@@ -164,6 +187,18 @@ namespace ControlVee.Port.InventoryManagement.DutShop
             invOnHand.BatchId = (int)reader["batchId"];
 
             return invOnHand;
+        }
+
+        public InventoryOnHandModelByType MapTotalOnHandInvetoryAllByTypeToDb(System.Data.IDataReader reader)
+        {
+            // TODO.
+            InventoryOnHandModelByType inv = new InventoryOnHandModelByType();
+
+            inv = new InventoryOnHandModelByType();
+            inv.NameOf = (string)reader["nameOf"];
+            inv.Total = (int)reader["total"];
+
+            return inv;
         }
         #endregion
 

@@ -2,23 +2,37 @@
 }
 
 body {
+    background-color: #d5d5d5
 }
 
 
 
-.list-group {
+.list-group-horizontal {
     height: 500px;
 }
 
-
-
 #batcheslst {
     margin: 50px;
-    background-color: #f9f9fa;
+    background-color: #084f61;
     padding: 20px;
+    border-color: #1eb6dd;
+    border-style: solid;
+    border-width: thin;
+}
+
+#invLst {
+    margin: 50px;
+    background-color: #084f61;
+    padding: 20px;
+    border-color: #1eb6dd;
+    border-style: solid;
+    border-width: thin;
+}
+
+#totalLst {
+    height: 140px;
 }
 
 #lstItem {
     padding: 10px;
-   
 }

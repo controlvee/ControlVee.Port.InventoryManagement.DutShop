@@ -24,7 +24,6 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
     /// </summary>
     public class HomeController : Controller
     {
-        private List<BatchModel> batches;
         private readonly string cstring = @"Data Source=(localdb)\mssqllocaldb;Database=DutShop;Integrated Security=True";
         private DataAccess context;
         public MasterModel masterModel = new MasterModel();
@@ -131,6 +130,22 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
             };
 
             return JsonConvert.SerializeObject(200);
+        }
+
+        [HttpGet]
+        public IActionResult GetInventoryOnHandAllByType()
+        {
+            List<InventoryOnHandModelByType>  invTotalsByType = new List<InventoryOnHandModelByType>();
+            using (var connection = new System.Data.SqlClient.SqlConnection())
+            {
+                connection.ConnectionString = cstring;
+
+                context = new DataAccess(connection);
+
+                invTotalsByType = context.GetInventoryTotalsByTypeFromDb();
+            };
+
+            return Json(JsonConvert.SerializeObject(invTotalsByType));
         }
     }
 }
