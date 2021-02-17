@@ -84,6 +84,12 @@ namespace ControlVee.Port.InventoryManagement.DutShop
 
             return batches;
         }
+
+        public bool MoveToInventoryDb(int id)
+        {
+            return true;
+        }
+
         #endregion
 
         #region Db Mappings

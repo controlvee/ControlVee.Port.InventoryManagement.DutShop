@@ -129,17 +129,18 @@
 
         var batchesCheckedToMoveToInventory = removeItemAll(isCheckedAndIds);
 
-    };
-
         $.ajax({
             type: 'POST',
             url: '/Home/MoveToInventory',
             dataType: 'json',
             data: "data=" + JSON.stringify({ batchNumbersReadyToMove: batchesCheckedToMoveToInventory }),
             success: function (data) {
-                });
             },
             error: function () { console.log("FAIL ON CREATE BATCH"); }
 
         });
+
+    };
+
+      
 </script>

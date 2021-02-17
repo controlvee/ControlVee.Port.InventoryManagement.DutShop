@@ -98,10 +98,10 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
         [HttpPost]
         public IActionResult MoveToInventory(string data)
         {
-            List<BatchModel> batches = new List<BatchModel>();
+            var idsToMove = new MoveToInventoryModel();
+            idsToMove =  JsonConvert.DeserializeObject<MoveToInventoryModel>(data);
             // TODO: Handle unterminated string exc.
             // TODO: Click twice to update batches?
-            var createBatchModel = JsonConvert.DeserializeObject<CreateBatchModel>(data);
 
             using (var connection = new System.Data.SqlClient.SqlConnection())
             {
@@ -109,10 +109,10 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
 
                 context = new DataAccess(connection);
 
-                foreach (var model in context.CreateBatchRecordFromDb(createBatchModel.nameOf, createBatchModel.total))
-                {
-                    batches.Add(model);
-                }
+                //foreach (var id in idsToMove)
+                //{
+                //    context.MoveToInventoryDb(Int32.Parse(id));
+                //}
             };
 
             // Send back Ids.
