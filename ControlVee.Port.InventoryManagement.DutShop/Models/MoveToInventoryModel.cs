@@ -7,8 +7,8 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Models
 {
     public class MoveToInventoryModel
     {
-        public int ID { get; set; }
+        public string ID { get; set; }
 
-        public bool IsChecked { get; set; }
+        public string IsChecked { get; set; }
     }
 }

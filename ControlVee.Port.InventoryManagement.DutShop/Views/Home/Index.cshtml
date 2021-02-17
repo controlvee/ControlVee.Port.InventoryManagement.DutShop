@@ -30,6 +30,7 @@
     <div class="custom-control">
 
         <ul id="batcheslst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
+        <ul id="invLst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
 
 
 
@@ -58,9 +59,38 @@
 </html>
 <script type="text/javascript">
 
+
+    window.addEventListener("load", updateAll, false);
+
     document.getElementById("createBatch").addEventListener("click", createBatchRecord, false);
     document.getElementById("moveToInventory").addEventListener("click", moveToInventory, false);
-    window.addEventListener("load", getAllBatches, false);
+
+
+  
+    function updateAll() {
+        var ul = document.getElementsByClassName("list-group-horizontal");
+        console.log(ul);
+
+
+
+
+        $.each(ul, function (key, value) {
+            console.log("list is: " + value);
+            //while (value.firstChild) {
+            //    x.removeChild(value.firstChild);
+            //    console.log("removed first child: " + value.firstChild);
+            //}
+
+
+
+
+
+
+        });
+
+        getAllBatches();
+        getAllOnHandInventory();
+    };
 
     function createBatchRecord() {
         var nameOf = document.getElementById("nameOfDoughnutBatch").value;
@@ -78,36 +108,12 @@
                         $('<div class="container"><div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"/><div class="form-text">'
                             + value['ID'] + '</div><div >' + value['NameOf'] + '</div><div><span class="badge bg-primary rounded-pill float-right">' + value['Total']
                             + '</span></div><div >' + value['Started'] + '</div></div></div>');
-                    $('#batcheslst').removeData(key);
                     $('#batcheslst').append(li);
-
                 });
+
+                updateAll();
             },
             error: function () { console.log("FAIL ON CREATE BATCH"); }
-
-        });
-    };
-
-    function getAllBatches() {
-        $.ajax({
-            type: 'GET',
-            url: '/Home/GetAllBatches',
-            dataType: 'json',
-            success: function (data) {
-                response = JSON.parse(data);
-                console.log(response);
-                $.each(response, function (key, value) {
-                    var li =
-                        $('<div class="container border" style="margin:20px;  width:250px; padding:40px;"> <div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div class="form-text">'
-                            + value['ID'] + '</div><div >' + value['NameOf'] + '</div><div><span class="badge bg-primary rounded-pill float-right">' + value['Total']
-                            + '</span></div><div >' + value['Started'] + '</div></div><div>');
-                    $('#batcheslst').removeData(key);
-                    $('#batcheslst').append(li);
-
-                });
-            },
-            error: function () { console.log("FAIL ON CREATE BATCH"); }
-
         });
     };
 
@@ -124,6 +130,7 @@
                     ++i;
                 }
             }
+            console.log(isCheckedAndIds);
             return isCheckedAndIds;
         };
 
@@ -133,14 +140,72 @@
             type: 'POST',
             url: '/Home/MoveToInventory',
             dataType: 'json',
-            data: "data=" + JSON.stringify({ batchNumbersReadyToMove: batchesCheckedToMoveToInventory }),
+            data: "data=" + JSON.stringify(batchesCheckedToMoveToInventory),
             success: function (data) {
+                console.log("SUCCESS ON MOVE TO INVENTORY");
+
+
+
+
+                updateAll();
+            },
+            error: function () { console.log("FAIL ON MOVE TO INVENTORY"); }
+
+        });
+
+        
+    };
+
+    function getAllBatches() {
+        $.ajax({
+            type: 'GET',
+            url: '/Home/GetAllBatches',
+            dataType: 'json',
+            success: function (data) {
+                response = JSON.parse(data);
+                console.log(response);
+                $.each(response, function (key, value) {
+                    var li =
+                        $('<div class="container border" style="margin:20px;  width:250px; padding:40px;"> <div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div class="form-text">'
+                            + value['ID'] + '</div><div >' + value['NameOf'] + '</div><div><span class="badge bg-primary rounded-pill float-right">' + value['Total']
+                            + '</span></div><div >' + value['Started'] + '</div></div><div>');
+                    $('#batcheslst').append(li);
+
+                });
             },
             error: function () { console.log("FAIL ON CREATE BATCH"); }
 
         });
-
     };
+
+    function getAllOnHandInventory() {
+        $.ajax({
+            type: 'GET',
+            url: '/Home/GetAllOnHandInventory',
+            dataType: 'json',
+            success: function (data) {
+                response = JSON.parse(data);
+                console.log(response);
+                $.each(response, function (key, value) {
+                    var li =
+                        $('<div class="container border" style="margin:20px;  width:250px; padding:40px;"> <div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div >' + value['BatchId'] + '</div><div class="form-text">'
+                            + value['ID'] + '</div><div >' + value['NameOf'] + '</div><div><span class="badge bg-primary rounded-pill float-right">' + value['Total']
+                            + '</span></div><div >' + value['Expiration'] + '</div></div><div>');
+                    $('#invLst').append(li);
+
+                });
+
+               
+            },
+            error: function () { console.log("FAIL ON CREATE BATCH"); }
+
+        });
+    };
+
+   
+  
+
+  
 
       
 </script>

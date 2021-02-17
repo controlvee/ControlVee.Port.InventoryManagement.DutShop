@@ -80,26 +80,41 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
         [HttpGet]
         public IActionResult GetAllBatches()
         {
-            batches = new List<BatchModel>();
+            List<BatchModel> batches = new List<BatchModel>();
             using (var connection = new System.Data.SqlClient.SqlConnection())
             {
                 connection.ConnectionString = cstring;
 
                 context = new DataAccess(connection);
              
-                batches = context.GetNewlyAllBatchesFromDb();
+                batches = context.GetAllBatchesFromDb();
 
-                masterModel.BatchModels = batches;
             };
 
             return Json(JsonConvert.SerializeObject(batches));
         }
 
-        [HttpPost]
-        public IActionResult MoveToInventory(string data)
+        [HttpGet]
+        public IActionResult GetAllOnHandInventory()
         {
-            var idsToMove = new MoveToInventoryModel();
-            idsToMove =  JsonConvert.DeserializeObject<MoveToInventoryModel>(data);
+            var allOnHandInv = new List<InventoryOnHandModel>();
+            using (var connection = new System.Data.SqlClient.SqlConnection())
+            {
+                connection.ConnectionString = cstring;
+
+                context = new DataAccess(connection);
+
+                allOnHandInv = context.GetAllOnHandInventoryFromDb();
+
+            };
+
+            return Json(JsonConvert.SerializeObject(allOnHandInv));
+        }
+
+        [HttpPost]
+        public string MoveToInventory(string data)
+        {
+            var idsToMove =  JsonConvert.DeserializeObject<List<MoveToInventoryModel>>(data);
             // TODO: Handle unterminated string exc.
             // TODO: Click twice to update batches?
 
@@ -109,14 +124,13 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
 
                 context = new DataAccess(connection);
 
-                //foreach (var id in idsToMove)
-                //{
-                //    context.MoveToInventoryDb(Int32.Parse(id));
-                //}
+                foreach (var id in idsToMove)
+                {
+                    context.MoveToInventoryDb(Int32.Parse(id.ID));
+                }
             };
 
-            // Send back Ids.
-            return Json(JsonConvert.SerializeObject(batches));
+            return JsonConvert.SerializeObject(200);
         }
     }
 }
