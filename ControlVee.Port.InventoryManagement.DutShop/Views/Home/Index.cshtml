@@ -71,20 +71,12 @@
         var ul = document.getElementsByClassName("list-group-horizontal");
         console.log(ul);
 
-
-
-
         $.each(ul, function (key, value) {
             console.log("list is: " + value);
-            //while (value.firstChild) {
-            //    x.removeChild(value.firstChild);
-            //    console.log("removed first child: " + value.firstChild);
-            //}
-
-
-
-
-
+            while (value.firstChild) {
+                value.removeChild(value.firstChild);
+                console.log("removed first child: " + value.firstChild);
+            }
 
         });
 
@@ -143,10 +135,6 @@
             data: "data=" + JSON.stringify(batchesCheckedToMoveToInventory),
             success: function (data) {
                 console.log("SUCCESS ON MOVE TO INVENTORY");
-
-
-
-
                 updateAll();
             },
             error: function () { console.log("FAIL ON MOVE TO INVENTORY"); }
