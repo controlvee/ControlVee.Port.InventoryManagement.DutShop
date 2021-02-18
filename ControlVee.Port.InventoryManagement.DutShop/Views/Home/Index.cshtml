@@ -57,8 +57,9 @@
         </select>
     </div>
    
-    <button id="createBatch" class="btn btn-outline-dark float-right">create batch</button>
-    <button id="moveToInventory" class="btn btn-outline-dark float-right">move batch</button>
+    <button id="createBatch" class="btn btn-outline-dark float-right">create</button>
+    <button id="moveToInventory" class="btn btn-outline-dark float-right">move</button>
+    <button id="deleteBatch" class="btn btn-outline-dark float-right">delete</button>
 </body>
 </html>
 <script type="text/javascript">
@@ -68,6 +69,7 @@
 
     document.getElementById("createBatch").addEventListener("click", createBatchRecord, false);
     document.getElementById("moveToInventory").addEventListener("click", moveToInventory, false);
+    document.getElementById("deleteBatchFromInventory").addEventListener("click", deleteFromInventory, false);
 
 
   
@@ -114,6 +116,22 @@
         });
     };
 
+    function deleteFromInventory() {
+
+        var ids = Array.prototype.slice.call(document.getElementsByClassName("form-check-input")).map(function (x) { return { "Id": x.nextSibling.innerText }; });
+
+        $.ajax({
+            type: 'POST',
+            url: '/Home/CreateBatchRecord',
+            dataType: 'json',
+            data: "data=" + JSON.stringify(ids),
+            success: function (data) {
+               
+            },
+            error: function () { console.log("FAIL ON DELETE FROM INVENTORY"); }
+        });
+    };
+
     function moveToInventory() {
 
         var isCheckedAndIds = Array.prototype.slice.call(document.getElementsByClassName("form-check-input")).map(function (x) { return { "isChecked": x['checked'], "Id": x.nextSibling.innerText }; });
@@ -145,8 +163,6 @@
             error: function () { console.log("FAIL ON MOVE TO INVENTORY"); }
 
         });
-
-        
     };
 
     function getAllBatches() {
