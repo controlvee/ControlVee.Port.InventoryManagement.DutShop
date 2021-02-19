@@ -2,34 +2,35 @@
 }
 
 body {
-    background-color: #d5d5d5
+    background: url(../Doughtnut_Background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .list-group-horizontal {
-    height: 550px;
+    height: 800px;
     width: 1250px;
-    margin:0px;
-}
-
-#batcheslst {
-    margin: 50px;
-    background-color: #084f61;
-    padding: 20px;
-    border-color: #1eb6dd;
-    border-style: solid;
-    border-width: thin;
-}
-
-#invLst {
-    margin: 50px;
-    background-color: #084f61;
-    padding: 20px;
-    border-color: #1eb6dd;
-    border-style: solid;
-    border-width: thin;
+    margin: 10px;
+    font-size: small;
+    background-color: #1f92ad;
+    padding: 6px;
 }
 
 #totalLst {
     height: 240px;
+    font-size: large;
+    color: #ffffff;
+}
+
+.btn {
+    background-color: #f1e3f5;
+}
+
+.yellow {
+    color: #ffd800;
+    font-family: SimSun;
+    font-size: xx-large;
+    font-weight: bolder;
 }
 

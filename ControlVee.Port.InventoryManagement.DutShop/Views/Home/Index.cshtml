@@ -27,16 +27,11 @@
 </head>
 <body>
 
-    <div class="custom-control">
-
+    <div class="row justify-content-center">
+        <div class="yellow">batches</div>
         <ul id="batcheslst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
-        <ul id="invLst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
-        <ul id="totalLst" class="list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
 
-    </div>
-
-    <div class="d-inline-block">
-        <select id="nameOfDoughnutBatch" class="form-select">
+        <select id="nameOfDoughnutBatch" class="form-select float-left col-3">
             <option value="Classic Glazed">Classic Glazed</option>
             <option value="Strawberry PopTart">Strawberry PopTart</option>
             <option value="Chocolatte">Chocolatte</option>
@@ -45,17 +40,29 @@
             <option value="Shred Tha Gnar">Shred Tha Gnar</option>
             <option value="Sugar High">Sugar High</option>
         </select>
-        <select id="quantityOfBatch" class="form-select">
+        <select id="quantityOfBatch" class="form-select float-left col-3">
             <option value="6">6</option>
             <option value="12">12</option>
             <option value="24">24</option>
             <option value="48">48</option>
         </select>
+
+
+        <div class="row justify-content-center">
+            <button id="createBatch" class="btn btn-outline-dark float-right col-2">create</button>
+            <button id="moveToInventory" class="btn btn-outline-dark float-right col-2">move</button>
+            <button id="deleteBatch" class="btn btn-outline-dark float-right col-2">delete</button>
+        </div>
+        <div class="yellow">inventory</div>
+        <ul id="invLst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
+        <div class="yellow">totals</div>
+        <ul id="totalLst" class="list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
+
     </div>
-   
-    <button id="createBatch" class="btn btn-outline-dark float-right">create</button>
-    <button id="moveToInventory" class="btn btn-outline-dark float-right">move</button>
-    <button id="deleteBatch" class="btn btn-outline-dark float-right">delete</button>
+
+
+    
+  
 </body>
 </html>
 <script type="text/javascript">
@@ -100,7 +107,7 @@
                 console.log(response);
                 $.each(response, function (key, value) {
                     var li =
-                        $('<div class="container"><div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"/><div class="form-text">'
+                        $('<div class="container" ><div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"/><div class="form-text">'
                             + value['ID'] + '</div><div >' + value['NameOf'] + '</div><div><span class="badge bg-primary rounded-pill float-right">' + value['Total']
                             + '</span></div><div >' + value['Started'] + '</div></div></div>');
                     $('#batcheslst').append(li);
@@ -171,11 +178,10 @@
                 console.log(response);
                 $.each(response, function (key, value) {
                     var li =
-                        $('<div class="container border bg-light" style="margin:0px;  width:250px; height:175px; padding:40px;"> <div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div class="form-text">'
+                        $('<div class="container border bg-light" style="margin:5px;  width:250px; height:175px; padding:40px;"> <div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div class="form-text">'
                             + value['ID'] + '</div><div >' + value['NameOf'] + '</div><div><span class="badge bg-primary rounded-pill float-right">' + value['Total']
                             + '</span></div><div >' + value['Started'] + '</div></div><div>');
                     $('#batcheslst').append(li);
-
                 });
             },
             error: function () { console.log("FAIL ON CREATE BATCH"); }
@@ -193,14 +199,12 @@
                 console.log(response);
                 $.each(response, function (key, value) {
                     var li =
-                        $('<div class="container border bg-light" style="margin:0px;  width:250px; height:175px; padding:40px;"> <div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div >' + value['BatchId'] + '</div><div class="form-text">'
+                        $('<div class="container border bg-light" style="margin:5px;  width:250px; height:175px; padding:40px;"> <div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div >' + value['BatchId'] + '</div><div class="form-text">'
                             + value['ID'] + '</div><div >' + value['NameOf'] + '</div><div><span class="badge bg-primary rounded-pill bg-success float-right">' + value['Total']
                             + '</span></div><div >' + value['Expiration'] + '</div></div><div>');
                     $('#invLst').append(li);
 
                 });
-
-               
             },
             error: function () { console.log("FAIL ON CREATE BATCH"); }
 
