@@ -15,6 +15,10 @@ body {
     font-size: small;
     background-color: #1f92ad;
     padding: 6px;
+    border-style: solid;
+    border-width: thick;
+    border-radius: 10px;
+    border-color: white;
 }
 
 #totalLst {
