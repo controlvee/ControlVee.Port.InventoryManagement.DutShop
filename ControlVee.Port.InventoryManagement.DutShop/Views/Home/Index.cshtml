@@ -33,10 +33,6 @@
         <ul id="invLst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
         <ul id="totalLst" class="list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
 
-
-
-
-
     </div>
 
     <div class="d-inline-block">
@@ -122,11 +118,11 @@
 
         $.ajax({
             type: 'POST',
-            url: '/Home/CreateBatchRecord',
+            url: '/Home/DeleteInventoryRecord',
             dataType: 'json',
             data: "data=" + JSON.stringify(ids),
             success: function (data) {
-               
+                updateAll();
             },
             error: function () { console.log("FAIL ON DELETE FROM INVENTORY"); }
         });

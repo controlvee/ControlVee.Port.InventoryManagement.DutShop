@@ -14,6 +14,7 @@ namespace ControlVee.Port.InventoryManagement.DutShop
         private readonly string storedProc_MoveToInventory = "MoveToInventory";
         private readonly string storedProc_GetAllOnHandInventory = "GetAllOnHandInventory";
         private readonly string storedProc_GetInventoryTotalsByType = "GetOnHandInventoryTotalsByType";
+        private readonly string storedProc_DeleteFromInventory = "DeleteFromInventory";
         private List<BatchModel> batches;
         private BatchModel batch;
 
@@ -133,6 +134,31 @@ namespace ControlVee.Port.InventoryManagement.DutShop
                 using (command.ExecuteReader())
                 {
                    // If command.numberOfRowsAffected?
+                }
+            }
+        }
+
+        public void DeleteFromInventoryDb(int id)
+        {
+            AssuredConnected();
+            using (System.Data.IDbCommand command = connection.CreateCommand())
+            {
+                string text = storedProc_DeleteFromInventory;
+                command.CommandText = text;
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                // Add input parameter.
+                SqlParameter prarameterIdOf = new SqlParameter();
+                prarameterIdOf.ParameterName = "@batchId";
+                prarameterIdOf.SqlDbType = SqlDbType.Int;
+                prarameterIdOf.Direction = ParameterDirection.Input;
+                prarameterIdOf.Value = id;
+
+                command.Parameters.Add(prarameterIdOf);
+
+                using (command.ExecuteReader())
+                {
+                    // If command.numberOfRowsAffected?
                 }
             }
         }

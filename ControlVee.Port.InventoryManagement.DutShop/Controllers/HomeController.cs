@@ -56,7 +56,6 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
         {
             List<BatchModel> batches = new List<BatchModel>();
             // TODO: Handle unterminated string exc.
-            // TODO: Click twice to update batches?
             var createBatchModel = JsonConvert.DeserializeObject<CreateBatchModel>(data);
 
             using (var connection = new System.Data.SqlClient.SqlConnection())
@@ -93,7 +92,7 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
             return Json(JsonConvert.SerializeObject(batches));
         }
 
-        [HttpGet]
+        [HttpGet] 
         public IActionResult GetAllOnHandInventory()
         {
             var allOnHandInv = new List<InventoryOnHandModel>();
@@ -126,6 +125,28 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
                 foreach (var id in idsToMove)
                 {
                     context.MoveToInventoryDb(Int32.Parse(id.ID));
+                }
+            };
+
+            return JsonConvert.SerializeObject(200);
+        }
+
+        [HttpPost]
+        public string DeleteFromInventory(string data)
+        {
+            var idsToMove = JsonConvert.DeserializeObject<List<MoveToInventoryModel>>(data);
+            // TODO: Handle unterminated string exc.
+            // TODO: Click twice to update batches?
+
+            using (var connection = new System.Data.SqlClient.SqlConnection())
+            {
+                connection.ConnectionString = cstring;
+
+                context = new DataAccess(connection);
+
+                foreach (var id in idsToMove)
+                {
+                    context.DeleteFromInventoryDb(Int32.Parse(id.ID));
                 }
             };
 
