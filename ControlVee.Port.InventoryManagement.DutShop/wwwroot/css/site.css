@@ -4,7 +4,7 @@
 body {
     background: url(../Doughtnut_Background.jpg);
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: auto;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -13,7 +13,7 @@ body {
     width: 1250px;
     margin: 10px;
     font-size: small;
-    background-color: #1f92ad;
+    background-color: #34c3e5;
     padding: 6px;
     border-style: solid;
     border-width: thick;
@@ -28,7 +28,8 @@ body {
 }
 
 .btn {
-    background-color: #f1e3f5;
+    background-color: #34c3e5;
+    margin:4px;
 }
 
 .yellow {
