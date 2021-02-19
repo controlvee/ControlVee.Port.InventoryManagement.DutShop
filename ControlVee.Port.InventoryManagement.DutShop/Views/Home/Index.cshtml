@@ -27,11 +27,13 @@
 </head>
 <body>
 
-    <div class="row justify-content-center">
+    <div class="row container">
         <div class="yellow">batches</div>
-        <ul id="batcheslst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
 
-        <select id="nameOfDoughnutBatch" class="form-select col-6">
+        <ul id="batcheslst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
+        <button id="createBatch" class="btn btn-outline-light float-left col-2">create</button>
+
+        <select id="nameOfDoughnutBatch" class="form-select col-4 float-right">
             <option value="Classic Glazed">Classic Glazed</option>
             <option value="Strawberry PopTart">Strawberry PopTart</option>
             <option value="Chocolatte">Chocolatte</option>
@@ -40,7 +42,7 @@
             <option value="Shred Tha Gnar">Shred Tha Gnar</option>
             <option value="Sugar High">Sugar High</option>
         </select>
-        <select id="quantityOfBatch" class="form-select col-6">
+        <select id="quantityOfBatch" class="form-select col-4 float-right">
             <option value="6">6</option>
             <option value="12">12</option>
             <option value="24">24</option>
@@ -48,22 +50,25 @@
         </select>
 
 
-        <div class="row justify-content-center">
-            <button id="createBatch" class="btn btn-outline-light float-right col-2">create</button>
-            <button id="moveToInventory" class="btn btn-outline-light float-right col-2">move</button>
-            <button id="deleteBatch" class="btn btn-outline-light float-right col-2">delete</button>
-        </div>
+
 
         <div class="yellow">inventory</div>
         <ul id="invLst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
+
+        <button id="moveToInventory" class="btn btn-outline-light float-right col-2">move</button>
+        <button id="deleteBatch" class="btn btn-outline-light col-2 float-right">delete</button>
+
+
         <div class="yellow">totals</div>
         <ul id="totalLst" class="list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
-
     </div>
 
 
-    
-  
+
+
+
+
+
 </body>
 </html>
 <script type="text/javascript">
@@ -73,7 +78,7 @@
 
     document.getElementById("createBatch").addEventListener("click", createBatchRecord, false);
     document.getElementById("moveToInventory").addEventListener("click", moveToInventory, false);
-    document.getElementById("deleteBatchFromInventory").addEventListener("click", deleteFromInventory, false);
+    document.getElementById("deleteBatch").addEventListener("click", deleteFromInventory, false);
 
 
   
@@ -122,13 +127,28 @@
 
     function deleteFromInventory() {
 
-        var ids = Array.prototype.slice.call(document.getElementsByClassName("form-check-input")).map(function (x) { return { "Id": x.nextSibling.innerText }; });
+        var isCheckedAndIds = Array.prototype.slice.call(document.getElementsByClassName("form-check-input")).map(function (x) { return { "isChecked": x['checked'], "Id": x.nextSibling.innerText }; });
+
+        function removeItemAll(isCheckedAndIds) {
+            var i = 0;
+            while (i < isCheckedAndIds.length) {
+                if (isCheckedAndIds[i].isChecked === false) {
+                    isCheckedAndIds.splice(i, 1);
+                } else {
+                    ++i;
+                }
+            }
+            console.log(isCheckedAndIds);
+            return isCheckedAndIds;
+        };
+
+        var batchesCheckedToDelete = removeItemAll(isCheckedAndIds);
 
         $.ajax({
             type: 'POST',
-            url: '/Home/DeleteInventoryRecord',
+            url: '/Home/DeleteFromInventory',
             dataType: 'json',
-            data: "data=" + JSON.stringify(ids),
+            data: "data=" + JSON.stringify(batchesCheckedToDelete),
             success: function (data) {
                 updateAll();
             },

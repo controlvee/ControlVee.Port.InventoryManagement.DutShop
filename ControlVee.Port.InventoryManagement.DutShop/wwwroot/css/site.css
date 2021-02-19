@@ -4,7 +4,7 @@
 body {
     background: url(../Doughtnut_Background.jpg);
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -37,5 +37,7 @@ body {
     font-family: SimSun;
     font-size: xx-large;
     font-weight: bolder;
+    padding: 20px;
+    float: right;
 }
 
