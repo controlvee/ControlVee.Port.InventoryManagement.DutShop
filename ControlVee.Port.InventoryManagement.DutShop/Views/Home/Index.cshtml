@@ -27,7 +27,7 @@
 </head>
 <body>
     <div class="flex-column">
-        <div id="carouselForInventory" class="carousel slide" data-ride="carousel">
+        <div id="carouselForInventory" class="carousel" data-interval="false">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="row container">
@@ -37,6 +37,7 @@
                     <div class="container">
                         <ul id="batcheslst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
                         <button id="createBatch" class="btn btn-outline-light col-2">create</button>
+                        <button id="moveToInventory" class="btn btn-outline-light col-2">move</button>
 
                         <select id="nameOfDoughnutBatch" class="form-select col-4">
                             <option value="Classic Glazed">Classic Glazed</option>
@@ -53,7 +54,7 @@
                             <option value="24">24</option>
                             <option value="48">48</option>
                         </select>
-                        </div>
+                    </div>
                     </div>
                 <div class="carousel-item">
                     <div class="row container">
@@ -62,7 +63,7 @@
                     <div class="container">
                         <ul id="invLst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
 
-                        <button id="moveToInventory" class="btn btn-outline-light col-2">move</button>
+                        
                         <button id="deleteBatch" class="btn btn-outline-light col-2">delete</button>
                     </div>
                     </div>
