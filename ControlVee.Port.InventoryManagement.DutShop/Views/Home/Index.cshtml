@@ -26,42 +26,77 @@
 
 </head>
 <body>
+    <div class="flex-column">
+        <div id="carouselForInventory" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row container">
+                        <div class="yellow">batches</div>
+                    </div>
 
-    <div class="row container">
-        <div class="yellow">batches</div>
+                    <div class="container">
+                        <ul id="batcheslst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
+                        <button id="createBatch" class="btn btn-outline-light col-2">create</button>
 
-        <ul id="batcheslst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
-        <button id="createBatch" class="btn btn-outline-light float-left col-2">create</button>
+                        <select id="nameOfDoughnutBatch" class="form-select col-4">
+                            <option value="Classic Glazed">Classic Glazed</option>
+                            <option value="Strawberry PopTart">Strawberry PopTart</option>
+                            <option value="Chocolatte">Chocolatte</option>
+                            <option value="Capn Crunched">Capn Crunched</option>
+                            <option value="Emma noms">Emma noms</option>
+                            <option value="Shred Tha Gnar">Shred Tha Gnar</option>
+                            <option value="Sugar High">Sugar High</option>
+                        </select>
+                        <select id="quantityOfBatch" class="form-select col-4">
+                            <option value="6">6</option>
+                            <option value="12">12</option>
+                            <option value="24">24</option>
+                            <option value="48">48</option>
+                        </select>
+                        </div>
+                    </div>
+                <div class="carousel-item">
+                    <div class="row container">
+                        <div class="yellow">inventory</div>
+                    </div>
+                    <div class="container">
+                        <ul id="invLst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
 
-        <select id="nameOfDoughnutBatch" class="form-select col-4 float-right">
-            <option value="Classic Glazed">Classic Glazed</option>
-            <option value="Strawberry PopTart">Strawberry PopTart</option>
-            <option value="Chocolatte">Chocolatte</option>
-            <option value="Capn Crunched">Capn Crunched</option>
-            <option value="Emma noms">Emma noms</option>
-            <option value="Shred Tha Gnar">Shred Tha Gnar</option>
-            <option value="Sugar High">Sugar High</option>
-        </select>
-        <select id="quantityOfBatch" class="form-select col-4 float-right">
-            <option value="6">6</option>
-            <option value="12">12</option>
-            <option value="24">24</option>
-            <option value="48">48</option>
-        </select>
+                        <button id="moveToInventory" class="btn btn-outline-light col-2">move</button>
+                        <button id="deleteBatch" class="btn btn-outline-light col-2">delete</button>
+                    </div>
+                    </div>
+                <div class="carousel-item">
+                    <div class="row container">
+                        <div class="yellow">totals</div>
+                    </div>
+                    <div class="container">
+                        <ul id="totalLst" class="list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
+                    </div>
+                    </div>
+                </div>
 
+            <a class="carousel-control-prev dark-arrow" href="#carouselForInventory" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next dark-arrow" href="#carouselForInventory" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
 
-
-
-        <div class="yellow">inventory</div>
-        <ul id="invLst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
-
-        <button id="moveToInventory" class="btn btn-outline-light float-right col-2">move</button>
-        <button id="deleteBatch" class="btn btn-outline-light col-2 float-right">delete</button>
-
-
-        <div class="yellow">totals</div>
-        <ul id="totalLst" class="list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
+        </div>
     </div>
+   
+
+       
+
+
+
+
+
+
+        
 
 
 

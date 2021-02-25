@@ -9,9 +9,8 @@ body {
 }
 
 .list-group-horizontal {
-    height: 800px;
-    width: 1250px;
-    margin: 10px;
+    height: 300px;
+    width: 1000px;
     font-size: small;
     background-color: #34c3e5;
     padding: 6px;
@@ -19,12 +18,6 @@ body {
     border-width: thick;
     border-radius: 10px;
     border-color: white;
-}
-
-#totalLst {
-    height: 240px;
-    font-size: large;
-    color: #ffffff;
 }
 
 .btn {
@@ -39,5 +32,22 @@ body {
     font-weight: bolder;
     padding: 20px;
     float: right;
+}
+
+.carousel {
+    height: 500px;
+}
+
+.carousel-inner {
+}
+
+.carousel-item {
+}
+
+.dark-arrow {
+    color: black;
+    background-color: black;
+    margin-left: -200px;
+    margin-right: -200px;
 }
 
