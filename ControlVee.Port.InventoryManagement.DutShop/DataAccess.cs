@@ -192,7 +192,7 @@ namespace ControlVee.Port.InventoryManagement.DutShop
         {
             // TODO.
             batch = new BatchModel();
-            batch.ID = (int)reader["ID"];
+            batch.ID = (string)reader["ID"];
             batch.NameOf = (string)reader["nameOf"];
             batch.Total = (int)reader["total"];
             batch.Started = (DateTime)reader["started"];

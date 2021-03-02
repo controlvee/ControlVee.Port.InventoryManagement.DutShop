@@ -52,7 +52,7 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
 
       
         [HttpPost]
-        public void CreateBatchRecord(string data)
+        public IActionResult CreateBatchRecord(string data)
         {
             List<BatchModel> batches = new List<BatchModel>();
             var createBatchModel = JsonConvert.DeserializeObject<CreateBatchModel>(data);
@@ -68,6 +68,9 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
                     batches.Add(model);
                 }
             };
+
+            // Send back Ids.
+            return Json(JsonConvert.SerializeObject(batches));
         }
 
        

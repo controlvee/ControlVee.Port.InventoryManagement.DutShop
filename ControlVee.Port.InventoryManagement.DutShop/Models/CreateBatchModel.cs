@@ -8,7 +8,7 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Models
     [Serializable]
     public class CreateBatchModel
     {
-        public int ID;
+        public string ID;
         public string nameOf;
         public int total;
     }
