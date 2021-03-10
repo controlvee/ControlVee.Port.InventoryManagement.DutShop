@@ -128,10 +128,10 @@
                 console.log(response);
                 $.each(response, function (key, value) {
                     var li =
-                        $('<div class="card"; style="margin: 2px; background-color: #2d2d30;"><div class="container "; style="margin:5px;  width:300px; height:175px; color: white;">'
+                        $('<div class="card"; style="margin: 2px; background-color: #2d2d30;"><div class="container "; style="margin:5px;  width:320px; height:220px; color: white;">'
                             + '<div class="card-header"; style="height: 50px; font-size: large; background-color: transparent; "><div id="flexSwitchCompleted"; class="form-check form-switch float-left"><input class="form-check-input"; type="checkbox"><div class="form-text inline-flex"; style="color: white;"">'
                             + value['NameOf'] + '</div></div><div class="float-right"  style="color: #808080";>' + value['Total'] + " left"
-                            + '</div></div><div style="color: #d09a49; font-size: medium;">' + '<mark>' + "expires: "  + value['Expire'] + '</div></mark><div style="color: #d09a49; font-size: medium;">' + "total sold: " + value['TotalSold'] + '</div><div class="card-content" style="padding: 10px;"></div></div></div>');
+                            + '</div></div><div class="card-content" style="padding: 10px; height:100px; color: #808080;">Notes:</div><div class="card-footer"><div style="color: #d09a49; font-size: medium;">' + '<mark>' + "expires: "  + value['Expire'] + '</div></mark><div style="color: #d09a49; font-size: medium;">' + "total sold: " + value['TotalSold'] + '</div></div></div></div>');
                     $('#batchesLst').append(li);
                 });
             },
