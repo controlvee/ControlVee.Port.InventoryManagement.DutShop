@@ -3,7 +3,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #9b9b9b;
+    background-color: #333333;
 }
 
 .container-main {
@@ -20,16 +20,16 @@ body {
 
 
 .batch-col {
-    background-color: #4b4b4b;
+    background-color: transparent;
     padding: 0px;
     padding-bottom: 10px;
     border-left-style: solid;
-    border-left-width: 60px;
+    border-left-width: 0px;
     border-color: #9b9b9b;
 }
 
 .totals-col {
-    background-color: #1a1a1a;
+    background-color: #151515;
     padding:0px;
 }
 
@@ -48,7 +48,7 @@ body {
 }
 
 #scatterPlot {
-    background-color: #1a1a1a;
+    background-color: #151515;
     float: right;
 }
 
@@ -76,21 +76,24 @@ body {
 }
 
 .label {
-    background-color: #007acc;
+    background-color: #0c70b4;
     color: #ffffff;
     font-size: large;
-    padding: 14px;
+    padding: 4px;
+    height: 40px;
 }
 
 .card {
     background-color: #1e1e1e;
     color: #333333;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .card-header {
     background-color: #1a1a1a;
     height: 40px;
     font-size: large;
+   
 }
 
 .card-footer {
