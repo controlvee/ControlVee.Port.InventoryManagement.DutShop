@@ -5,12 +5,10 @@ body {
  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
  background-color: #333333;
  padding:10px;
+ height: 100%;
 }
 
-ul {
-    height: 1000px;
-    color: white;
-}
+
 
 #batchesLst {
     font-size: small;
@@ -20,6 +18,7 @@ ul {
     border-width: 10px;
     border-color: #2d2d30;
     overflow-y: scroll;
+    height: 1045px;
 }
 
 #totalLst {
@@ -28,8 +27,8 @@ ul {
     border-style: solid;
     border-width: 10px;
     border-color: #2d2d30;
-    overflow-y: scroll;
     padding: 0px;
+    flex-direction: column;
 }
 
 .btn {
@@ -52,6 +51,7 @@ ul {
     background-color: #1e1e1e;
     border-color: #b200ff;
     color: #f8f9fa;
+    float: left;
 }
 
 .label {
