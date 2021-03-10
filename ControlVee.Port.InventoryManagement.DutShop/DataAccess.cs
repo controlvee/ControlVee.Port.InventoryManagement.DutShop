@@ -9,18 +9,17 @@ namespace ControlVee.Port.InventoryManagement.DutShop
     public class DataAccess
     {
         private System.Data.IDbConnection connection;
-        private readonly string storedProc_CreateBatchRecord = "CreateBatchRecord";
-        private readonly string storedProc_GetallBatches = "GetAllBatches";
-        private readonly string storedProc_MoveToInventory = "MoveToInventory";
-        private readonly string storedProc_GetAllOnHandInventory = "GetAllOnHandInventory";
-        private readonly string storedProc_GetInventoryTotalsByType = "GetOnHandInventoryTotalsByType";
-        private readonly string storedProc_DeleteFromInventory = "DeleteFromInventory";
+        private readonly string storedProc_CreateBatchRecord = "SimulateBatches";
+        private readonly string storedProc_SimulateSale = "SimulateSale";
+        private readonly string storedProc_GetInventoryTotalsByType = "GetTotalSold";
         private List<BatchModel> batches;
+        private List<TotalSoldModel> totalSold;
         private BatchModel batch;
+        private TotalSoldModel batchTotalSold;
 
         public DataAccess()
         {
-            batches = new List<BatchModel>();
+            
         }
 
         public DataAccess(System.Data.IDbConnection connection)
@@ -29,9 +28,9 @@ namespace ControlVee.Port.InventoryManagement.DutShop
         }
 
         #region DbActions
-        internal List<BatchModel> CreateBatchRecordFromDb(string nameOf, int? total)
+        internal bool CreateBatchRecordFromDb()
         {
-            batches = new List<BatchModel>();
+            bool success = false;
 
             AssuredConnected();
             using (System.Data.IDbCommand command = connection.CreateCommand())
@@ -39,32 +38,16 @@ namespace ControlVee.Port.InventoryManagement.DutShop
                 command.CommandText = storedProc_CreateBatchRecord;
                 command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                // Add input parameter.
-                SqlParameter parameterNameOf = new SqlParameter();
-                parameterNameOf.ParameterName = "@nameOf";
-                parameterNameOf.SqlDbType = SqlDbType.NVarChar;
-                parameterNameOf.Direction = ParameterDirection.Input;
-                parameterNameOf.Value = nameOf;
-                // Add input parameter.
-                SqlParameter parameterTotalMade = new SqlParameter();
-                parameterTotalMade.ParameterName = "@totalMade";
-                parameterTotalMade.SqlDbType = SqlDbType.Int;
-                parameterTotalMade.Direction = ParameterDirection.Input;
-                parameterTotalMade.Value = total;
-
-                command.Parameters.Add(parameterNameOf);
-                command.Parameters.Add(parameterTotalMade);
-
                 using (System.Data.IDataReader reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.RecordsAffected > 0)
                     {
-                        batches.Add(MapBatchesFromDb(reader));
+                        success = true;
                     }
                 }
             }
 
-            return batches;
+            return success;
         }
 
         public List<BatchModel> GetAllBatchesFromDb()
@@ -74,9 +57,9 @@ namespace ControlVee.Port.InventoryManagement.DutShop
             AssuredConnected();
             using (System.Data.IDbCommand command = connection.CreateCommand())
             {
-                string text = storedProc_GetallBatches;
+                string text = $"select * from dbo.OnHandInventory";
                 command.CommandText = text;
-                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.CommandType = CommandType.Text;
 
                 using (System.Data.IDataReader reader = command.ExecuteReader())
                 {
@@ -90,84 +73,32 @@ namespace ControlVee.Port.InventoryManagement.DutShop
             return batches;
         }
 
-        public List<InventoryOnHandModel> GetAllOnHandInventoryFromDb()
+        internal bool SimulateSaleFromDb()
         {
-            List<InventoryOnHandModel> invOnHand = new List<InventoryOnHandModel>();
+            bool success = false;
 
             AssuredConnected();
             using (System.Data.IDbCommand command = connection.CreateCommand())
             {
-                string text = storedProc_GetAllOnHandInventory;
-                command.CommandText = text;
+                command.CommandText = storedProc_SimulateSale;
                 command.CommandType = System.Data.CommandType.StoredProcedure;
 
                 using (System.Data.IDataReader reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.RecordsAffected > 0)
                     {
-                        invOnHand.Add(MapInventoryOnHandFromDb(reader));
+                        success = true;
                     }
                 }
             }
 
-            return invOnHand;
+            return success;
         }
 
-        public void MoveToInventoryDb(int id)
+        internal List<TotalSoldModel> GetTotalSoldFromDb()
         {
-            AssuredConnected();
-            using (System.Data.IDbCommand command = connection.CreateCommand())
-            {
-                string text = storedProc_MoveToInventory;
-                command.CommandText = text;
-                command.CommandType = System.Data.CommandType.StoredProcedure;
+            totalSold = new List<TotalSoldModel>();
 
-                // Add input parameter.
-                SqlParameter prarameterIdOf = new SqlParameter();
-                prarameterIdOf.ParameterName = "@batchId";
-                prarameterIdOf.SqlDbType = SqlDbType.Int;
-                prarameterIdOf.Direction = ParameterDirection.Input;
-                prarameterIdOf.Value = id;
-
-                command.Parameters.Add(prarameterIdOf);
-
-                using (command.ExecuteReader())
-                {
-                   // If command.numberOfRowsAffected?
-                }
-            }
-        }
-
-        public void DeleteFromInventoryDb(int id)
-        {
-            AssuredConnected();
-            using (System.Data.IDbCommand command = connection.CreateCommand())
-            {
-                string text = storedProc_DeleteFromInventory;
-                command.CommandText = text;
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                // Add input parameter.
-                SqlParameter prarameterIdOf = new SqlParameter();
-                prarameterIdOf.ParameterName = "@batchId";
-                prarameterIdOf.SqlDbType = SqlDbType.Int;
-                prarameterIdOf.Direction = ParameterDirection.Input;
-                prarameterIdOf.Value = id;
-
-                command.Parameters.Add(prarameterIdOf);
-
-                using (command.ExecuteReader())
-                {
-                    // If command.numberOfRowsAffected?
-                }
-            }
-        }
-
-        public List<InventoryOnHandModelByType> GetInventoryTotalsByTypeFromDb()
-        {
-            List<InventoryOnHandModelByType> inv = new List<InventoryOnHandModelByType>();
-
-            // TODO.
             AssuredConnected();
             using (System.Data.IDbCommand command = connection.CreateCommand())
             {
@@ -178,54 +109,42 @@ namespace ControlVee.Port.InventoryManagement.DutShop
                 {
                     while (reader.Read())
                     {
-                        inv.Add(MapTotalOnHandInvetoryAllByTypeToDb(reader));
+                        totalSold.Add(MapTotalSoldFromDb(reader));
                     }
                 }
             }
 
-            return inv;
+            return totalSold;
         }
+
         #endregion
 
         #region Db Mappings
         public BatchModel MapBatchesFromDb(System.Data.IDataReader reader)
         {
-            // TODO.
+            
             batch = new BatchModel();
             batch.ID = (string)reader["ID"];
             batch.NameOf = (string)reader["nameOf"];
             batch.Total = (int)reader["total"];
-            batch.Started = (DateTime)reader["started"];
+            batch.Completion = (DateTime)reader["completion"];
+            batch.Expire = (DateTime)reader["expire"];
+            batch.TotalSold = (int)reader["totalSold"];
+            batch.HasExpired = (int)reader["hasExpired"];
 
             return batch;
         }
 
-        public InventoryOnHandModel MapInventoryOnHandFromDb(System.Data.IDataReader reader)
+        public TotalSoldModel MapTotalSoldFromDb(System.Data.IDataReader reader)
         {
-            InventoryOnHandModel invOnHand = new InventoryOnHandModel();
-            // TODO.
-            invOnHand = new InventoryOnHandModel();
-            invOnHand.ID = (int)reader["ID"];
-            invOnHand.NameOf = (string)reader["nameOf"];
-            invOnHand.Total = (int)reader["total"];
-            invOnHand.Completion = (DateTime)reader["completion"];
-            invOnHand.Expiration = (DateTime)reader["expire"];
-            invOnHand.BatchId = (int)reader["batchId"];
 
-            return invOnHand;
+            batchTotalSold = new TotalSoldModel();
+            batchTotalSold.NameOf = (string)reader["nameOf"];
+            batchTotalSold.Total = (int)reader["total"];
+            batchTotalSold.TotalMoneyAmount = (decimal)reader["totalUSD"];
+            return batchTotalSold;
         }
-
-        public InventoryOnHandModelByType MapTotalOnHandInvetoryAllByTypeToDb(System.Data.IDataReader reader)
-        {
-            // TODO.
-            InventoryOnHandModelByType inv = new InventoryOnHandModelByType();
-
-            inv = new InventoryOnHandModelByType();
-            inv.NameOf = (string)reader["nameOf"];
-            inv.Total = (int)reader["total"];
-
-            return inv;
-        }
+    
         #endregion
 
         private bool AssuredConnected()

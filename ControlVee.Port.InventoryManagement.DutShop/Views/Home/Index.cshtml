@@ -52,11 +52,8 @@
 
 
 
-        <div class="yellow">inventory</div>
-        <ul id="invLst" class="pre-scrollable list-group-horizontal d-flex flex-wrap justify-content-center"></ul>
-
-        <button id="moveToInventory" class="btn btn-outline-light float-right col-2">move</button>
-        <button id="deleteBatch" class="btn btn-outline-light col-2 float-right">delete</button>
+        <button id="getSales" class="btn btn-outline-light float-right col-2">getSales</button>
+        <button id="simulateSale" class="btn btn-outline-light col-2 float-right">simulateSale</button>
 
 
         <div class="yellow">totals</div>
@@ -73,14 +70,10 @@
 </html>
 <script type="text/javascript">
 
-
     window.addEventListener("load", updateAll, false);
-
     document.getElementById("createBatch").addEventListener("click", createBatchRecord, false);
-    document.getElementById("moveToInventory").addEventListener("click", moveToInventory, false);
-    document.getElementById("deleteBatch").addEventListener("click", deleteFromInventory, false);
-
-
+    document.getElementById("getSales").addEventListener("click", getSales, false);
+    document.getElementById("simulateSale").addEventListener("click", simulateSale, false);
 
     function updateAll() {
         var ul = document.getElementsByClassName("list-group-horizontal");
@@ -96,8 +89,7 @@
         });
 
         getAllBatches();
-        getAllOnHandInventory();
-        getInventoryByType();
+        getSales();
     };
 
     function createBatchRecord() {
@@ -105,94 +97,22 @@
         var total = document.getElementById("quantityOfBatch").value;
         $.ajax({
             type: 'POST',
-            url: '/Home/CreateBatchRecord',
+            url: '/Home/CreateBatch',
             dataType: 'json',
             data: "data=" + JSON.stringify({ id: 0, nameOf: nameOf, total: total }),
             success: function (data) {
                 response = JSON.parse(data);
                 console.log(response);
-                $.each(response, function (key, value) {
-                    var li =
-                        $('<div class="container" ><div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"/><div class="form-text">'
-                            + value['ID'] + '</div><div >' + value['nameOf'] + '</div><div><span class="badge bg-primary rounded-pill float-right">' + value['total']
-                            + '</span></div><div >' + value['Started'] + '</div></div></div>');
-                    $('#batcheslst').append(li);
-                });
-
                 updateAll();
             },
             error: function () { console.log("FAIL ON CREATE BATCH"); }
         });
     };
 
-    function deleteFromInventory() {
-
-        var isCheckedAndIds = Array.prototype.slice.call(document.getElementsByClassName("form-check-input")).map(function (x) { return { "isChecked": x['checked'], "Id": x.nextSibling.innerText }; });
-
-        function removeItemAll(isCheckedAndIds) {
-            var i = 0;
-            while (i < isCheckedAndIds.length) {
-                if (isCheckedAndIds[i].isChecked === false) {
-                    isCheckedAndIds.splice(i, 1);
-                } else {
-                    ++i;
-                }
-            }
-            console.log(isCheckedAndIds);
-            return isCheckedAndIds;
-        };
-
-        var batchesCheckedToDelete = removeItemAll(isCheckedAndIds);
-
-        $.ajax({
-            type: 'POST',
-            url: '/Home/DeleteFromInventory',
-            dataType: 'json',
-            data: "data=" + JSON.stringify(batchesCheckedToDelete),
-            success: function (data) {
-                updateAll();
-            },
-            error: function () { console.log("FAIL ON DELETE FROM INVENTORY"); }
-        });
-    };
-
-    function moveToInventory() {
-
-        var isCheckedAndIds = Array.prototype.slice.call(document.getElementsByClassName("form-check-input")).map(function (x) { return { "isChecked": x['checked'], "Id": x.nextSibling.innerText }; });
-
-        function removeItemAll(isCheckedAndIds) {
-            var i = 0;
-            while (i < isCheckedAndIds.length) {
-                if (isCheckedAndIds[i].isChecked === false) {
-                    isCheckedAndIds.splice(i, 1);
-                } else {
-                    ++i;
-                }
-            }
-            console.log(isCheckedAndIds);
-            return isCheckedAndIds;
-        };
-
-        var batchesCheckedToMoveToInventory = removeItemAll(isCheckedAndIds);
-
-        $.ajax({
-            type: 'POST',
-            url: '/Home/MoveToInventory',
-            dataType: 'json',
-            data: "data=" + JSON.stringify(batchesCheckedToMoveToInventory),
-            success: function (data) {
-                console.log("SUCCESS ON MOVE TO INVENTORY");
-                updateAll();
-            },
-            error: function () { console.log("FAIL ON MOVE TO INVENTORY"); }
-
-        });
-    };
-
     function getAllBatches() {
         $.ajax({
             type: 'GET',
-            url: '/Home/GetAllBatches',
+            url: '/Home/getBatches',
             dataType: 'json',
             success: function (data) {
                 response = JSON.parse(data);
@@ -201,7 +121,7 @@
                     var li =
                         $('<div class="container border bg-light" style="margin:5px;  width:250px; height:175px; padding:40px;"> <div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div class="form-text">'
                             + value['ID'] + '</div><div >' + value['NameOf'] + '</div><div><span class="badge bg-primary rounded-pill float-right">' + value['Total']
-                            + '</span></div><div >' + value['Started'] + '</div></div><div>');
+                            + '</span></div><div >' + value['Expire'] + '</div></div><div>');
                     $('#batcheslst').append(li);
                 });
             },
@@ -210,31 +130,9 @@
         });
     };
 
-    function getAllOnHandInventory() {
+    function getSales() {
         $.ajax({
-            type: 'GET',
-            url: '/Home/GetAllOnHandInventory',
-            dataType: 'json',
-            success: function (data) {
-                response = JSON.parse(data);
-                console.log(response);
-                $.each(response, function (key, value) {
-                    var li =
-                        $('<div class="container border bg-light" style="margin:5px;  width:250px; height:175px; padding:40px;"> <div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div >' + value['BatchId'] + '</div><div class="form-text">'
-                            + value['ID'] + '</div><div >' + value['NameOf'] + '</div><div><span class="badge bg-primary rounded-pill bg-success float-right">' + value['Total']
-                            + '</span></div><div >' + value['Expiration'] + '</div></div><div>');
-                    $('#invLst').append(li);
-
-                });
-            },
-            error: function () { console.log("FAIL ON CREATE BATCH"); }
-
-        });
-    };
-
-    function getInventoryByType() {
-        $.ajax({
-            url: '/Home/GetInventoryOnHandAllByType',
+            url: '/Home/getTotalSold',
             type: 'GET',
             dataType: 'json',
             success: function (data) {
@@ -250,4 +148,35 @@
             error: function () { console.log("FAIL ON GET TOTAL BY TYPE"); }
         });
     };
+
+    //function deleteFromInventory() {
+
+    //    var isCheckedAndIds = Array.prototype.slice.call(document.getElementsByClassName("form-check-input")).map(function (x) { return { "isChecked": x['checked'], "Id": x.nextSibling.innerText }; });
+
+    //    function removeItemAll(isCheckedAndIds) {
+    //        var i = 0;
+    //        while (i < isCheckedAndIds.length) {
+    //            if (isCheckedAndIds[i].isChecked === false) {
+    //                isCheckedAndIds.splice(i, 1);
+    //            } else {
+    //                ++i;
+    //            }
+    //        }
+    //        console.log(isCheckedAndIds);
+    //        return isCheckedAndIds;
+    //    };
+
+    //    var batchesCheckedToDelete = removeItemAll(isCheckedAndIds);
+
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: '/Home/DeleteFromInventory',
+    //        dataType: 'json',
+    //        data: "data=" + JSON.stringify(batchesCheckedToDelete),
+    //        success: function (data) {
+    //            updateAll();
+    //        },
+    //        error: function () { console.log("FAIL ON DELETE FROM INVENTORY"); }
+    //    });
+    //};
 </script>

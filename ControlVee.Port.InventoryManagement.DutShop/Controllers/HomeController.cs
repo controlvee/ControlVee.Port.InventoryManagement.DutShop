@@ -6,6 +6,7 @@ using System.Linq;
 using System.Data;
 using Newtonsoft.Json;
 using System;
+using System.Data.SqlClient;
 
 namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
 {
@@ -24,148 +25,85 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
     /// </summary>
     public class HomeController : Controller
     {
-        private readonly string cstring = @"Data Source=(localdb)\mssqllocaldb;Database=DutShop;Integrated Security=True";
+        private readonly string cstring = @"Data Source=(localdb)\MSSQLLocalDB;Database=DutShop;Integrated Security=True";
         private DataAccess context;
-        public MasterModel masterModel = new MasterModel();
-        public MasterModel MasterModel
-
-        {
-            get
-            {
-                return masterModel;
-            }
-            set
-            {
-                masterModel = value;
-            }
-        }
-
+        List<BatchModel> batches;
+        List<TotalSoldModel> totalSold;
+        
         public HomeController()
         {
 
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-      
-        [HttpPost]
-        public IActionResult CreateBatchRecord(string data)
-        {
-            List<BatchModel> batches = new List<BatchModel>();
-            var createBatchModel = JsonConvert.DeserializeObject<CreateBatchModel>(data);
-
-            using (var connection = new System.Data.SqlClient.SqlConnection())
-            {
-                connection.ConnectionString = cstring;
-
-                context = new DataAccess(connection);
-
-                foreach(var model in context.CreateBatchRecordFromDb(createBatchModel.nameOf, createBatchModel.total))
-                {
-                    batches.Add(model);
-                }
-            };
-
-            // Send back Ids.
-            return Json(JsonConvert.SerializeObject(batches));
-        }
-
-       
         [HttpGet]
-        public IActionResult GetAllBatches()
+        [Route("getBatches")]
+        public IQueryable<BatchModel> GetBatches()
         {
-            List<BatchModel> batches = new List<BatchModel>();
-            using (var connection = new System.Data.SqlClient.SqlConnection())
+            batches = new List<BatchModel>();
+            using (var connection = new SqlConnection())
             {
                 connection.ConnectionString = cstring;
 
                 context = new DataAccess(connection);
-             
+
                 batches = context.GetAllBatchesFromDb();
-
             };
 
-            return Json(JsonConvert.SerializeObject(batches));
-        }
-
-        [HttpGet] 
-        public IActionResult GetAllOnHandInventory()
-        {
-            var allOnHandInv = new List<InventoryOnHandModel>();
-            using (var connection = new System.Data.SqlClient.SqlConnection())
-            {
-                connection.ConnectionString = cstring;
-
-                context = new DataAccess(connection);
-
-                allOnHandInv = context.GetAllOnHandInventoryFromDb();
-
-            };
-
-            return Json(JsonConvert.SerializeObject(allOnHandInv));
-        }
-
-        [HttpPost]
-        public string MoveToInventory(string data)
-        {
-            var idsToMove =  JsonConvert.DeserializeObject<List<MoveToInventoryModel>>(data);
-            // TODO: Handle unterminated string exc.
-            // TODO: Click twice to update batches?
-
-            using (var connection = new System.Data.SqlClient.SqlConnection())
-            {
-                connection.ConnectionString = cstring;
-
-                context = new DataAccess(connection);
-
-                foreach (var id in idsToMove)
-                {
-                    context.MoveToInventoryDb(Int32.Parse(id.ID));
-                }
-            };
-
-            return JsonConvert.SerializeObject(200);
-        }
-
-        [HttpPost]
-        public string DeleteFromInventory(string data)
-        {
-            var idsToMove = JsonConvert.DeserializeObject<List<MoveToInventoryModel>>(data);
-            // TODO: Handle unterminated string exc.
-            // TODO: Click twice to update batches?
-
-            using (var connection = new System.Data.SqlClient.SqlConnection())
-            {
-                connection.ConnectionString = cstring;
-
-                context = new DataAccess(connection);
-
-                foreach (var id in idsToMove)
-                {
-                    context.DeleteFromInventoryDb(Int32.Parse(id.ID));
-                }
-            };
-
-            return JsonConvert.SerializeObject(200);
+            return batches.AsQueryable();
         }
 
         [HttpGet]
-        public IActionResult GetInventoryOnHandAllByType()
+        [Route("createBatch")]
+        public int CreateBatch()
         {
-            List<InventoryOnHandModelByType>  invTotalsByType = new List<InventoryOnHandModelByType>();
-            using (var connection = new System.Data.SqlClient.SqlConnection())
+            int success = 0;
+            using (var connection = new SqlConnection())
             {
                 connection.ConnectionString = cstring;
 
                 context = new DataAccess(connection);
 
-                invTotalsByType = context.GetInventoryTotalsByTypeFromDb();
+                if (context.CreateBatchRecordFromDb())
+                    success = 1;
             };
 
-            return Json(JsonConvert.SerializeObject(invTotalsByType));
+            return success;
+        }
+
+        [HttpGet]
+        [Route("simulateSale")]
+        public int SimulateSale()
+        {
+            int success = 0;
+            using (var connection = new SqlConnection())
+            {
+                connection.ConnectionString = cstring;
+
+                context = new DataAccess(connection);
+
+                if (context.SimulateSaleFromDb())
+                    success = 1;
+            };
+
+            return success;
+        }
+
+        [HttpGet]
+        [Route("getTotalSold")]
+        public IQueryable<TotalSoldModel> GetTotalSold()
+        {
+            totalSold = new List<TotalSoldModel>();
+            using (var connection = new SqlConnection())
+            {
+                connection.ConnectionString = cstring;
+
+                context = new DataAccess(connection);
+
+                totalSold = context.GetTotalSoldFromDb();
+
+            };
+
+            return totalSold.AsQueryable();
         }
     }
 }
