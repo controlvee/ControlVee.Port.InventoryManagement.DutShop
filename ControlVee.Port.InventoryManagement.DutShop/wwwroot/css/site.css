@@ -4,7 +4,7 @@
 body {
     font-family: 'Lucida Console';
     font-stretch: expanded;
-    background-color: #333333;
+    background-color: #808080;
 }
 
 .container-main {
@@ -21,7 +21,7 @@ body {
 
 
 .batch-col {
-    background-color: transparent;
+    background-color: #333333;
     padding: 0px;
     padding-bottom: 10px;
     border-left-style: solid;
@@ -71,7 +71,7 @@ body {
     height: 100%;
     align-self: center;
     background-color: #1e1e1e;
-    border-color: #ffffff;
+    border-color: #9b9b9b;
     border-radius: 0px;
     color: #f8f9fa;
     float: left;
