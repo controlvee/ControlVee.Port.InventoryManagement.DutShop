@@ -18,44 +18,45 @@
 <body>
 
     <div class="container-main">
-        <div id="scatterPlot" class="col-7 float-left">
+        <div id="scatterPlot" class="col-6 float-left">
         </div>
 
 
 
 
-        <div class="col-3 float-left batch-col">
-            <div class="label">batches</div>
+        <div class="col-4 float-left batch-col">
+            <div class="label">Batches</div>
             <div class="row justify-content-center">
                 <ul id="batchesLst" class="list-group-horizontal d-flex flex-wrap justify-content-center float-left"></ul>
-                <button id="simulateSale col-2" class="btn btn-outline-dark">simulateSale</button>
-                <button id="createBatch col-2" class="btn btn-outline-dark">create</button>
+
+
+                    <button id="simulateSale col-2" class="btn btn-outline-dark">simulateSale</button>
+                    <button id="createBatch col-2" class="btn btn-outline-dark">create</button>
 
 
 
-                <select id="nameOfDoughnutBatch" class="form-select col-3">
-                    <option value="Churro">Churro</option>
-                    <option value="Frosted Sprinkled">Frosted Sprinkled</option>
-                    <option value="Strawberry Filled">Strawberry Filled</option>
-                    <option value="Captain Crunched">Captain Crunched</option>
-                    <option value="Nutella Filled">Nutella Filled</option>
-                    <option value="Chocolate Glazed">Chocolate Glazed</option>
-                    <option value="Classic Glazed">Classic Glazed</option>
-                    <option value="Powdered Sugar">Powdered Sugar</option>
-                </select>
-                <select id="quantityOfBatch" class="form-select col-2">
-                    <option value="6">6</option>
-                    <option value="12">12</option>
-                    <option value="24">24</option>
-                    <option value="48">48</option>
-                </select>
-
+                    <select id="nameOfDoughnutBatch" class="form-select col-3">
+                        <option value="Churro">Churro</option>
+                        <option value="Frosted Sprinkled">Frosted Sprinkled</option>
+                        <option value="Strawberry Filled">Strawberry Filled</option>
+                        <option value="Captain Crunched">Captain Crunched</option>
+                        <option value="Nutella Filled">Nutella Filled</option>
+                        <option value="Chocolate Glazed">Chocolate Glazed</option>
+                        <option value="Classic Glazed">Classic Glazed</option>
+                        <option value="Powdered Sugar">Powdered Sugar</option>
+                    </select>
+                    <select id="quantityOfBatch" class="form-select col-2">
+                        <option value="6">6</option>
+                        <option value="12">12</option>
+                        <option value="24">24</option>
+                        <option value="48">48</option>
+                    </select>
             </div>
 
         </div>
 
         <div class="col-2 float-right totals-col">
-            <div class="label">totals</div>
+            <div class="label">Totals</div>
             <div class="row">
 
 
@@ -131,7 +132,7 @@
                         return yScale(d[1]);
                     })
                     .attr("r", function (d) {
-                        return rScale(d[1]);
+                        return rScale(d[1] * 2);
                     });
 
                 svgMain.selectAll("text")
@@ -250,10 +251,10 @@
                 console.log(response);
                 $.each(response, function (key, value) {
                     var li =
-                        $('<div class="card"; style="margin: 6px; width:100%;"><div class="container"; style=" color: white; background-color: transparent;">'
+                        $('<div class="card"; style="margin: 6px; width:85%;"><div class="container"; style=" color: white; background-color: transparent;">'
                             + '<div class="card-header"><div class="form-text"; style="color: white;">'
                             + value['NameOf'] + '</div><div id="flexSwitchCompleted"; class="form-check form-switch float-right"><input class="form-check-input"; type="checkbox"></div><div class="float-right"  style="color: #808080";>' 
-                            + '</div></div><div class="card-content" >'+ value['Total'] + " left" +'</div><div class="card-footer"; style=" padding:2px; display: flex; justify-content: space-between;"><div style="color: #d09a49; font-size: small; ">' + '<mark>' + "expires: " + value['Expire'] + '</div></mark><div  style="color: #d09a49; font-size: medium; ">' + "total sold: " + value['TotalSold'] + '</div></div></div></div>');
+                            + '</div></div><div class="card-content" >' + value['Total'] + " left" + '</div><div class="card-footer"; style=" padding:2px; display: flex; justify-content: space-between;"><div style="color: #d09a49; font-size: small; ">' + '<mark>' + "expires: " + value['Expire'] + '</div></mark><div  style="color: #47a1dd; font-size: medium; ">' + "total sold: " + value['TotalSold'] + '</div></div></div></div>');
                     $('#batchesLst').append(li);
                 });
             },
@@ -272,7 +273,7 @@
                 console.log(response);
                 $.each(response, function (key, value) {
                     var li =
-                        $('<div class="card" style="border-color: transparent; width:auto; margin:20px; padding:10px; height:auto; background-color: transparent"><div style=" font-size: large; color: #808080;">' + value['NameOf'] + '</div><div><span class="badge badge-info"; style="font-size: small; marigin-bottom: 2px;">' + value['TotalMoneyAmount'] + " $" + '</span></div><div style="color: #808080; margin-top: 2px;">' + "qty sold: " + value['Total'] + '</div></div>');
+                        $('<div class="card" style="border-color: transparent; width:auto; margin:20px; padding:10px; height:auto; background-color: transparent"><div style=" font-size: large; color: #808080;">' + value['NameOf'] + '</div><div><span class=""; style="color:white; font-size: medium; font-weight:thin; marigin-bottom: 2px;">' + value['TotalMoneyAmount'] + " $" + '</span></div><div style="color: #808080; margin-top: 2px;">' + "qty sold: " + value['Total'] + '</div></div>');
                     $('#totalLst').append(li);
                 });
             },
