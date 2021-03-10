@@ -3,41 +3,43 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #333333;
-    padding: 10px;
+    background-color: #1e1e1e;
 }
 
 .container-main {
-    margin-top: 4px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
-    background:#232323;
     height: 50%;
-    padding: 20px;
+    padding: 4px;
+    background-color: #171717;
 }
 
 #batchesLst {
     font-size: small;
-    background-color: #1e1e1e;
-    padding: 0px;
+    background-color: #333333;
+    padding: 10px;
     border-style: solid;
-    border-width: 10px;
-    border-color: #2d2d30;
+    border-width: 2px;
+    border-color: #333333;
     overflow-y: scroll;
     height: 1000px;
+    width: 100%;
 }
 
 #totalLst {
     font-size: small;
-    background-color: #1e1e1e;
+    background-color: transparent;
     border-style: solid;
     border-width: 10px;
-    border-color: #2d2d30;
-    padding: 0px;
+    border-color: transparent;
+    padding: 10px;
     flex-direction: column;
 }
 
 #scatterPlot {
     background-color: transparent;
+    float:right;
 }
 
 .btn {
@@ -74,6 +76,11 @@ body {
     color: #333333;
 }
 
+mark {
+    background-color: rgb(208 154 73);
+   
+}
+
 .axis path,
 .axis line {
     fill: none;
@@ -90,7 +97,7 @@ body {
 
 circle {
     fill: transparent;
-    stroke: rgb(67 176 204);
+    stroke: rgb(208 154 73);
     stroke-width: 2px;
 }
 
