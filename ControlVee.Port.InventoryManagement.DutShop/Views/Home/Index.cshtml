@@ -18,13 +18,13 @@
 <body>
 
     <div class="container-main">
-        <div id="scatterPlot" class="col-6 float-left">
+        <div id="scatterPlot" class="col-7 float-left">
         </div>
 
 
 
 
-        <div class="col-4 float-left">
+        <div class="col-3 float-left">
             <div class="label col-2">batches</div>
             <div class="row justify-content-center">
                 <ul id="batchesLst" class="list-group-horizontal d-flex flex-wrap justify-content-center float-left"></ul>
@@ -250,7 +250,7 @@
                 console.log(response);
                 $.each(response, function (key, value) {
                     var li =
-                        $('<div class="card"; style="margin: 4px; background-color: #1b1b1b; height:auto; width: 100%;"><div class="container"; style="margin:5px; color: white; background-color: transparent;">'
+                        $('<div class="card"; style="margin: 2px; width:100%;"><div class="container"; style=" color: white; background-color: transparent;">'
                             + '<div class="card-header"; style="height: 50px; font-size: large; background-color: transparent; "><div id="flexSwitchCompleted"; class="form-check form-switch float-left"><input class="form-check-input"; type="checkbox"><div class="form-text inline-flex"; style="color: white;"">'
                             + value['NameOf'] + '</div></div><div class="float-right"  style="color: #808080";>' + value['Total'] + " left"
                             + '</div></div><div class="card-content" style="height:60px; color: #808080;">Notes:</div><div class="card-footer"; style="display: flex; justify-content: space-between;"><div style="color: #d09a49; font-size: small; ">' + '<mark>' + "expires: " + value['Expire'] + '</div></mark><div  style="color: #d09a49; font-size: medium; ">' + "total sold: " + value['TotalSold'] + '</div></div></div></div>');
