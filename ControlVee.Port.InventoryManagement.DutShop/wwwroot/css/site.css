@@ -3,8 +3,8 @@
 
 body {
  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
- background-color: #e4e4e4;
-
+ background-color: #333333;
+ padding:10px;
 }
 
 ul {
@@ -55,9 +55,9 @@ ul {
 }
 
 .label {
-    color: #2d2d30;
-    font-size: x-large;
-    padding: 20px;
+    color: #9b9b9b;
+    font-size: large;
+    padding: 10px;
 }
 
 .card {
