@@ -2,39 +2,44 @@
 }
 
 body {
- font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ background-color: #1e1e1e;
+
 }
 
 ul {
     height: 850px;
+    color: white;
 }
 
 #batchesLst {
     font-size: small;
-    background-color: #ffffff;
+    background-color: #1e1e1e;
     padding: 6px;
     border-style: solid;
-    border-width: thin;
-    border-color: #c1c1c1;
+    border-width: 10px;
+    border-color: #333333;
     overflow-y: scroll;
 }
 
 #totalLst {
     font-size: small;
-    background-color: #ffffff;
+    background-color: #1e1e1e;
     border-style: solid;
-    border-width: thin;
-    border-color: #c1c1c1;
+    border-width: 10px;
+    border-color: #333333;
+    overflow-y: scroll;
     padding: 0px;
 }
 
 
 .btn {
-    background-color: #f8f9fa;
+    background-color: #2d2d30;
+    border-radius: 0px;
     border-style: solid;
     border-width: thin;
-    border-color: #808080;
-    color: #1e1e1e;
+    border-color: #333333;
+    color: #f8f9fa;
     height: 100%;
     width: 120px;
     margin: 4px;
@@ -45,11 +50,18 @@ ul {
     margin: 4px;
     height: 100%;
     align-self: center;
+    background-color: #1e1e1e;
+    border-color: #b200ff;
+    color: #f8f9fa;
 }
 
 .label {
-    color: #1e1e1e;
+    color: #f8f9fa;
     font-size: x-large;
     padding: 20px;
 }
 
+.card {
+    background-color: #1e1e1e;
+    color: #333333;
+}

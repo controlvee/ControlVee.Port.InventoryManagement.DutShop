@@ -128,9 +128,10 @@
                 console.log(response);
                 $.each(response, function (key, value) {
                     var li =
-                        $('<div class="container border bg-light" style="margin:5px;  width:250px; height:175px; padding:40px;"> <div id="flexSwitchCompleted" class="form-check form-switch float-left"><input class="form-check-input" type="checkbox"><div class="form-text">'
-                            + value['ID'] + '</div><div >' + value['NameOf'] + '</div><div><span class="badge bg-primary rounded-pill float-right">' + value['Total']
-                            + '</span></div><div >' + value['Expire'] + '</div></div><div>');
+                        $('<div class="card"; style="margin: 2px; background-color: #2d2d30;"><div class="container "; style="margin:5px;  width:300px; height:175px; color: white;">'
+                            + '<div class="card-header"; style="height: 50px; font-size: large; background-color: transparent; "><div id="flexSwitchCompleted"; class="form-check form-switch float-left"><input class="form-check-input"; type="checkbox"><div class="form-text inline-flex"; style="color: white;"">'
+                            + value['NameOf'] + '</div></div><div class="float-right"  style="color: #808080";>' + value['Total'] + " left"
+                            + '</div></div><div style="color: #d09a49; font-size: medium;">' + '<mark>' + "expires: "  + value['Expire'] + '</div></mark><div style="color: #d09a49; font-size: medium;">' + "total sold: " + value['TotalSold'] + '</div><div class="card-content" style="padding: 10px;"></div></div></div>');
                     $('#batchesLst').append(li);
                 });
             },
@@ -149,7 +150,7 @@
                 console.log(response);
                 $.each(response, function (key, value) {
                     var li =
-                        $('<div class="container" style="margin:0px;  width:250px; padding:40px; height:20px;"><div >' + value['NameOf'] + " | " + value['Total'] + '</div><div><span class="badge bg-primary rounded-pill"; style="background-color:#4cff00; font-size: small;">' + value['TotalMoneyAmount'] + "$" + '</span></div></div>');
+                        $('<div class="container" style="margin:0px;  width:100%; padding:40px; height:auto;"><div style=" font-size: large; color: white;">' + value['NameOf'] + '</div></br><p  style="color: #808080";>' + "qty sold: " + value['Total'] + '</p><div><span class="badge bg-primary rounded-pill"; style="background-color:#4cff00; font-size: small;">' + value['TotalMoneyAmount'] + "$" + '</span></div></div>');
                     $('#totalLst').append(li);
                 });
             },
