@@ -17,4 +17,8 @@
     <Folder Include="Content\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\doughnut.png" />
+  </ItemGroup>
+
 </Project>
