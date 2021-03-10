@@ -35,9 +35,13 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
 
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         [HttpGet]
-        [Route("getBatches")]
-        public IQueryable<BatchModel> GetBatches()
+        public IActionResult GetBatches()
         {
             batches = new List<BatchModel>();
             using (var connection = new SqlConnection())
@@ -49,13 +53,15 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
                 batches = context.GetAllBatchesFromDb();
             };
 
-            return batches.AsQueryable();
+            return Json(JsonConvert.SerializeObject(batches));
         }
 
-        [HttpGet]
-        [Route("createBatch")]
-        public int CreateBatch()
+        [HttpPost]
+        public IActionResult CreateBatch(string data)
         {
+            batches = new List<BatchModel>();
+            var createBatchModel = JsonConvert.DeserializeObject<CreateBatchModel>(data);
+
             int success = 0;
             using (var connection = new SqlConnection())
             {
@@ -63,15 +69,17 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
 
                 context = new DataAccess(connection);
 
-                if (context.CreateBatchRecordFromDb())
+                if( context.CreateBatchRecordFromDb(createBatchModel.nameOf, createBatchModel.total))
+                {
                     success = 1;
+                }
             };
 
-            return success;
+            return Json(JsonConvert.SerializeObject(success));
+        
         }
 
         [HttpGet]
-        [Route("simulateSale")]
         public int SimulateSale()
         {
             int success = 0;
@@ -89,8 +97,7 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
         }
 
         [HttpGet]
-        [Route("getTotalSold")]
-        public IQueryable<TotalSoldModel> GetTotalSold()
+        public IActionResult GetTotalSold()
         {
             totalSold = new List<TotalSoldModel>();
             using (var connection = new SqlConnection())
@@ -103,7 +110,7 @@ namespace ControlVee.Port.InventoryManagement.DutShop.Test.Controllers
 
             };
 
-            return totalSold.AsQueryable();
+            return Json(JsonConvert.SerializeObject(totalSold));
         }
     }
 }

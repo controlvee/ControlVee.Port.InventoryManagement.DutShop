@@ -28,8 +28,11 @@ namespace ControlVee.Port.InventoryManagement.DutShop
         }
 
         #region DbActions
-        internal bool CreateBatchRecordFromDb()
+
+        internal bool CreateBatchRecordFromDb(string nameOf, int? total)
         {
+            batches = new List<BatchModel>();
+
             bool success = false;
 
             AssuredConnected();
@@ -37,6 +40,22 @@ namespace ControlVee.Port.InventoryManagement.DutShop
             {
                 command.CommandText = storedProc_CreateBatchRecord;
                 command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                // Add input parameter.
+                SqlParameter parameterNameOf = new SqlParameter();
+                parameterNameOf.ParameterName = "@nameOf";
+                parameterNameOf.SqlDbType = SqlDbType.NVarChar;
+                parameterNameOf.Direction = ParameterDirection.Input;
+                parameterNameOf.Value = nameOf;
+                // Add input parameter.
+                SqlParameter parameterTotalMade = new SqlParameter();
+                parameterTotalMade.ParameterName = "@total";
+                parameterTotalMade.SqlDbType = SqlDbType.Int;
+                parameterTotalMade.Direction = ParameterDirection.Input;
+                parameterTotalMade.Value = total;
+
+                command.Parameters.Add(parameterNameOf);
+                command.Parameters.Add(parameterTotalMade);
 
                 using (System.Data.IDataReader reader = command.ExecuteReader())
                 {
@@ -49,7 +68,7 @@ namespace ControlVee.Port.InventoryManagement.DutShop
 
             return success;
         }
-
+        
         public List<BatchModel> GetAllBatchesFromDb()
         {
             batches = new List<BatchModel>();

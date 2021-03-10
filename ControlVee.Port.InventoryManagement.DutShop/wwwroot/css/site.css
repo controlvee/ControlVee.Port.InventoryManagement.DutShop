@@ -2,52 +2,54 @@
 }
 
 body {
-    background: url(../Doughtnut_Background.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
-.list-group-horizontal {
-    height: 300px;
-    width: 1000px;
+ul {
+    height: 850px;
+}
+
+#batchesLst {
     font-size: small;
-    background-color: #34c3e5;
+    background-color: #ffffff;
     padding: 6px;
     border-style: solid;
-    border-width: thick;
-    border-radius: 10px;
-    border-color: white;
+    border-width: thin;
+    border-color: #c1c1c1;
+    overflow-y: scroll;
 }
+
+#totalLst {
+    font-size: small;
+    background-color: #ffffff;
+    border-style: solid;
+    border-width: thin;
+    border-color: #c1c1c1;
+    padding: 0px;
+}
+
 
 .btn {
-    background-color: #34c3e5;
-    margin:4px;
+    background-color: #f8f9fa;
+    border-style: solid;
+    border-width: thin;
+    border-color: #808080;
+    color: #1e1e1e;
+    height: 100%;
+    width: 120px;
+    margin: 4px;
+    align-self: center;
 }
 
-.yellow {
-    color: #ffd800;
-    font-family: SimSun;
-    font-size: xx-large;
-    font-weight: bolder;
+.form-select {
+    margin: 4px;
+    height: 100%;
+    align-self: center;
+}
+
+.label {
+    color: #1e1e1e;
+    font-size: x-large;
     padding: 20px;
-    float: right;
-}
-
-.carousel {
-    height: 500px;
-}
-
-.carousel-inner {
-}
-
-.carousel-item {
-}
-
-.dark-arrow {
-    color: black;
-    background-color: black;
-    margin-left: -200px;
-    margin-right: -200px;
 }
 
