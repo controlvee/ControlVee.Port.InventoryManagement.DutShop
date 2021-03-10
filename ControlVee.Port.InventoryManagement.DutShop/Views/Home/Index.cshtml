@@ -18,20 +18,24 @@
 <body>
 
     <div class="container-main">
+        <div class="col-6 float-left">
+            <div id="scatterPlot">test</div>
+        </div>
 
-
-        <div class="col-3 float-left">
+        <div class="col-2 float-left">
+            <div class="label">totals</div>
             <div class="row">
-                <div class="label">totals</div>
+
 
             </div>
             <ul id="totalLst" class="list-group-horizontal flex-wrap"></ul>
         </div>
 
 
-        <div class="col-9 float-right">
+        <div class="col-4 float-right">
+            <div class="label col-2">batches</div>
             <div class="row justify-content-center">
-                <div class="label col-2">batches</div>
+                <ul id="batchesLst" class="list-group-horizontal d-flex flex-wrap justify-content-center float-left"></ul>
                 <button id="simulateSale col-2" class="btn btn-outline-dark">simulateSale</button>
                 <button id="createBatch col-2" class="btn btn-outline-dark">create</button>
 
@@ -58,7 +62,7 @@
 
 
 
-            <ul id="batchesLst" class="list-group-horizontal d-flex flex-wrap justify-content-center float-left"></ul>
+            
 
 
         </div>
@@ -124,10 +128,10 @@
                 console.log(response);
                 $.each(response, function (key, value) {
                     var li =
-                        $('<div class="card"; style="margin: 2px; background-color: #2d2d30; height:auto;"><div class="container"; style="margin:5px;  width:320px; height:100%; color: white;">'
+                        $('<div class="card"; style="margin: 4px; background-color: #2d2d30; height:auto; width: 100%;"><div class="container"; style="margin:5px; color: white;">'
                             + '<div class="card-header"; style="height: 50px; font-size: large; background-color: transparent; "><div id="flexSwitchCompleted"; class="form-check form-switch float-left"><input class="form-check-input"; type="checkbox"><div class="form-text inline-flex"; style="color: white;"">'
                             + value['NameOf'] + '</div></div><div class="float-right"  style="color: #808080";>' + value['Total'] + " left"
-                            + '</div></div><div class="card-content" style="padding: 10px; height:100px; color: #808080;">Notes:</div><div class="card-footer"><div style="color: #d09a49; font-size: medium;">' + '<mark>' + "expires: "  + value['Expire'] + '</div></mark><div style="color: #d09a49; font-size: medium;">' + "total sold: " + value['TotalSold'] + '</div></div></div></div>');
+                            + '</div></div><div class="card-content" style="height:100px; color: #808080;">Notes:</div><div class="card-footer"; style="flex-wrap: no-wrap; "><div style="color: #d09a49; font-size: small;">' + '<mark>' + "expires: "  + value['Expire'] + '</div></mark><div style="color: #d09a49; font-size: medium;">' + "total sold: " + value['TotalSold'] + '</div></div></div></div>');
                     $('#batchesLst').append(li);
                 });
             },
