@@ -150,7 +150,7 @@
                 console.log(response);
                 $.each(response, function (key, value) {
                     var li =
-                        $('<div class="container" style="margin:0px;  width:100%; padding:40px; height:auto;"><div style=" font-size: large; color: white;">' + value['NameOf'] + '</div></br><p  style="color: #808080";>' + "qty sold: " + value['Total'] + '</p><div><span class="badge bg-primary rounded-pill"; style="background-color:#4cff00; font-size: small;">' + value['TotalMoneyAmount'] + "$" + '</span></div></div>');
+                        $('<div class="container" style="margin:0px;  width:100%; padding:40px; height:auto;"><div style=" font-size: large; color: white;">' + value['NameOf'] + '</div></br><p  style="color: #808080";>' + "qty sold: " + value['Total'] + '</p><div><span class="badge bg-primary rounded-pill"; style="background-color:#4cff00; font-size: small;">' + value['TotalMoneyAmount'] + " $" + '</span></div></div>');
                     $('#totalLst').append(li);
                 });
             },
