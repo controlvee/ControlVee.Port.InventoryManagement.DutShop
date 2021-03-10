@@ -71,6 +71,7 @@ body {
     align-self: center;
     background-color: #1e1e1e;
     border-color: #ffffff;
+    border-radius: 0px;
     color: #f8f9fa;
     float: left;
 }

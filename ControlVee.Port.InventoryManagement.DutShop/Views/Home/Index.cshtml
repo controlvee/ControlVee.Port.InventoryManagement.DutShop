@@ -145,7 +145,7 @@
                     .attr("class", "textPlots")
                     .style("font-family", "sans-serif")
                     .style("font-size", "11px")
-                    .style("fill", "white")
+                    .style("fill", "#808080")
                     .attr("id", function (d) {
                         return d[0] + "_" + d[1];
                     })
@@ -254,7 +254,7 @@
                         $('<div class="card"; style="margin: 6px; width:85%;"><div class="container"; style=" color: white;">'
                             + '<div class="card-header"><div class="form-text"; style="color: white;">'
                             + value['NameOf'] + '</div><div id="flexSwitchCompleted"; class="form-check form-switch float-right"><input class="form-check-input"; type="checkbox"></div><div class="float-right"  style="color: #808080";>' 
-                            + '</div></div><div class="card-content" >' + value['Total'] + " left" + '</div><div class="card-footer"; style=" padding:2px; display: flex; justify-content: space-between;"><div style="color: #d09a49; font-size: small; ">' + '<mark>' + "expires: " + value['Expire'] + '</div></mark><div  style="color: #47a1dd; font-size: medium; ">' + "total sold: " + value['TotalSold'] + '</div></div></div></div>');
+                            + '</div></div><div class="card-content" >' + value['Total'] + " left" + '</div><div class="card-footer"; style=" padding:2px; display: flex; justify-content: space-between;"><div style="color: #d09a49; font-size: small; ">' + '<mark>' + "expires: " + value['Expire'] + '</div></mark><div  style="color: #808080; font-size: medium; ">' + "total sold: " + value['TotalSold'] + '</div></div></div></div>');
                     $('#batchesLst').append(li);
                 });
             },
